@@ -92,38 +92,6 @@ public interface Ageable {
         public int getForcedAgeTimer() {
             return forcedAgeTimer;
         }
-
-        /**
-         * Increases this entity's age, optionally updating {@link #forcedAge}. If the entity is an adult (if the entity's
-         * age is greater than or equal to 0) then the entity's age will be set to {@link #forcedAge}.
-         */
-        public void ageUp(int growthSeconds, boolean updateForcedAge) {
-            int growingAge = this.getGrowingAge();
-            int originalAge = growingAge;
-            growingAge += growthSeconds * 20;
-            if (growingAge > 0) {
-                growingAge = 0;
-            }
-
-            int ageAmount = growingAge - originalAge;
-            this.setGrowingAge(growingAge);
-            if (updateForcedAge) {
-                this.forcedAge += ageAmount;
-                if (this.forcedAgeTimer == 0) {
-                    this.forcedAgeTimer = FORCED_AGE_TIME;
-                }
-            }
-
-            if (this.getGrowingAge() == 0) {
-                this.setGrowingAge(this.forcedAge);
-            }
-
-        }
-
-        /**
-         * Increases this entity's age. If the entity is an adult (if the entity's age is greater than or equal to 0) then
-         * the entity's age will be set to {@link #forcedAge}. This method does not update {@link #forcedAge}.
-         */
         @Override
         public void addGrowth(int growth) {
             this.ageUp(growth, false);
